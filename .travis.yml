@@ -4,11 +4,11 @@ language: sh
 
 matrix:
   include:
-    - os: osx
-      osx_image: xcode9.1
-      env: CMAKE_CONFIGURATION=release BUILD_DIR=build
     - os: linux
       compiler: clang
+      env: CMAKE_CONFIGURATION=release BUILD_DIR=build
+    - os: osx
+      osx_image: xcode9.1
       env: CMAKE_CONFIGURATION=release BUILD_DIR=build
     - os: windows
       env:
@@ -29,9 +29,9 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
   
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call where make; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call dir c:\; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call dir c:\MinGW; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call dir c:\MinGW\bin; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then ls /c/; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then ls /c/MinGW; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then ls /c/MinGW/bin; fi
   - ls
   - ls source/app/gpr_tools
   

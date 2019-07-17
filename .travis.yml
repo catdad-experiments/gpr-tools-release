@@ -27,7 +27,11 @@ script:
   - cmake ../
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then make .; fi
+  
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call where make; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call dir c:\; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call dir c:\MinGW; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call dir c:\MinGW\bin; fi
   - ls
   - ls source/app/gpr_tools
   

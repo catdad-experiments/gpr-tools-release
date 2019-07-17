@@ -15,11 +15,12 @@ matrix:
         - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
         - BUILD_DIR=build
         - CMAKE_CONFIGURATION=release
-      
+
 before_script:
   - eval "${MATRIX_EVAL}"
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$PATH:/c/Program Files/CMake/bin"; fi
-  
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then ./windows-setup.sh; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$PATH:/c/Program Files/CMake/bin:$(pwd)/make/bin"; fi
+
 script:
   - cd gpr
   - mkdir build
@@ -27,11 +28,7 @@ script:
   - cmake ../
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
-  
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call where make; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then ls /c/; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then ls /c/MinGW; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then ls /c/MinGW/bin; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then call which make; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then make; fi
   - ls
   - ls source/app/gpr_tools
-  

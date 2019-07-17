@@ -21,6 +21,9 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$PATH:/c/Program Files/CMake/bin"; fi
   
 script:
+  - cd gpr
+  - mkdir build
+  - cd build
   - cmake ../
   - make .
   - ls source/app/gpr_tools

@@ -24,11 +24,9 @@ script:
   - cd gpr
   - mkdir build
   - cd build
-  - ls
   - cmake ../
-  - ls
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make .; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then make .; fi
   - ls
   - ls source/app/gpr_tools

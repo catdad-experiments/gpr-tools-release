@@ -28,7 +28,6 @@ script:
   - cmake ../
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then which cl; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then which msbuild; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then msbuild gpr.sln; fi
   - ls
   - ls source/app/gpr_tools

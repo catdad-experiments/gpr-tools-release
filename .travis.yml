@@ -18,7 +18,6 @@ matrix:
 
 before_script:
   - eval "${MATRIX_EVAL}"
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then ./windows-setup.sh; fi
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$PATH:/c/Program Files/CMake/bin:$(pwd)/make/bin"; fi
 
 script:
@@ -28,6 +27,6 @@ script:
   - cmake ../
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then msbuild gpr.sln; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then cmake --build .; fi
   - ls
   - ls source/app/gpr_tools

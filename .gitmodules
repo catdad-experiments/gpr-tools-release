@@ -1,3 +1,6 @@
 [submodule "gpr"]
 	path = gpr
 	url = https://github.com/gopro/gpr.git
+[submodule "cmake-init"]
+	path = cmake-init
+	url = https://github.com/cginternals/cmake-init.git

@@ -21,7 +21,7 @@ matrix:
         - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
         - BUILD_DIR=build
         - CMAKE_CONFIGURATION=release
-        - ARTIFACT_PATH=build/source/app/gpr_tools/Debug/gpr_tools.exe
+        - ARTIFACT_PATH=gpr/build/source/app/gpr_tools/Debug/gpr_tools.exe
 
 before_script:
   - eval "${MATRIX_EVAL}"

@@ -26,6 +26,7 @@ before_script:
   - chmod +x ./cmake-init/configure
 
 script:
+  - cd $TRAVIS_BUILD_DIR
   - cd gpr
   - ../cmake-init/configure
   - ../cmake-init/configure $CMAKE_CONFIGURATION
@@ -39,3 +40,7 @@ script:
   - ls
   - ls -R build
   - ls build/source/app/gpr_tools
+
+after_script:
+  - cd $TRAVIS_BUILD_DIR
+  - wget --method PUT --body-file=gpr/build/source/app/gpr_tools/gpr_tools "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME.tar" -O - -nv

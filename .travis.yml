@@ -46,4 +46,4 @@ script:
 
 after_script:
   - cd $TRAVIS_BUILD_DIR
-  - wget --method PUT --body-file=$ARTIFACT_PATH "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME" -O -
+  - curl --upload-file $ARTIFACT_PATH "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME"

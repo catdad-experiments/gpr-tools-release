@@ -44,4 +44,6 @@ script:
   - ls -R build
   - ls build/source/app/gpr_tools
   - cd $TRAVIS_BUILD_DIR
-  - wget --method PUT --body-file=$ARTIFACT_PATH "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME" -O - -nv
+  - curl --upload-file $ARTIFACT_PATH "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME" > transfer.txt
+  - ls -la
+  - cat transfer.txt

@@ -1,6 +1,6 @@
 # based on https://github.com/cginternals/cmake-init/blob/56e177454d0efb998aab51c13b0dcfbf97b4d9ec/.travis.yml
 
-language: bash
+language: sh
 
 matrix:
   include:
@@ -19,8 +19,7 @@ matrix:
 before_script:
   - eval "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then ./windows-setup.sh; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export MSBUILD_PATH="/c/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$MSBUILD_PATH:/c/Program Files/CMake/bin:$PATH"; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$PATH:/c/Program Files/CMake/bin:$(pwd)/make/bin"; fi
 
 script:
   - cd gpr
@@ -29,6 +28,6 @@ script:
   - cmake ../
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then msbuild /p:Configuration=Release gpr.sln; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then msbuild gpr.sln; fi
   - ls
   - ls source/app/gpr_tools

@@ -1,15 +1,19 @@
 # based on https://github.com/cginternals/cmake-init/blob/56e177454d0efb998aab51c13b0dcfbf97b4d9ec/.travis.yml
 
-language: sh
+language: bash
 
 matrix:
   include:
-#    - os: linux
-#      compiler: clang
-#      env: CMAKE_CONFIGURATION=release BUILD_DIR=build
-#    - os: osx
-#      osx_image: xcode9.1
-#      env: CMAKE_CONFIGURATION=release BUILD_DIR=build
+    - os: linux
+      compiler: clang
+      env:
+        - CMAKE_CONFIGURATION=release
+        - BUILD_DIR=build
+    - os: osx
+      osx_image: xcode9.1
+      env:
+        - CMAKE_CONFIGURATION=release
+        - BUILD_DIR=build
     - os: windows
       env:
         - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
@@ -19,14 +23,18 @@ matrix:
 before_script:
   - eval "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$PATH:/c/Program Files/CMake/bin:$(pwd)/make/bin"; fi
+  - chmod +x ./cmake-init/configure
 
 script:
   - cd gpr
-  - mkdir build
-  - cd build
-  - cmake ../
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then cmake --build .; fi
+  - ../cmake-init/configure
+  - ../cmake-init/configure $CMAKE_CONFIGURATION
+  - cmake --build $BUILD_DIR
+#  - mkdir build
+#  - cd build
+#  - cmake ../
+#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then cmake --build .; fi
   - ls
   - ls source/app/gpr_tools

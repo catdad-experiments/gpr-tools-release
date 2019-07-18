@@ -43,7 +43,5 @@ script:
   - ls
   - ls -R build
   - ls build/source/app/gpr_tools
-
-after_script:
   - cd $TRAVIS_BUILD_DIR
-  - curl -vs --upload-file $ARTIFACT_PATH "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME"
+  - curl -s --upload-file $ARTIFACT_PATH "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME"

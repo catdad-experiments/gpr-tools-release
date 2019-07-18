@@ -37,4 +37,5 @@ script:
 #  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make; fi
 #  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then cmake --build .; fi
   - ls
-  - ls source/app/gpr_tools
+  - ls build
+  - ls build/source/app/gpr_tools

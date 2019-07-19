@@ -47,3 +47,4 @@ script:
   - curl --upload-file $ARTIFACT_PATH "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME" > transfer.txt
   - ls -la
   - cat transfer.txt
+  - sleep 30

@@ -9,19 +9,19 @@ matrix:
       env:
         - CMAKE_CONFIGURATION=release
         - BUILD_DIR=build
-        - ARTIFACT_PATH=gpr/build/source/app/gpr_tools/gpr_tools
+        - ARTIFACT_PATH=source/app/gpr_tools/gpr_tools
     - os: osx
       osx_image: xcode9.1
       env:
         - CMAKE_CONFIGURATION=release
         - BUILD_DIR=build
-        - ARTIFACT_PATH=gpr/build/source/app/gpr_tools/gpr_tools
+        - ARTIFACT_PATH=source/app/gpr_tools/gpr_tools
     - os: windows
       env:
         - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
         - BUILD_DIR=build
         - CMAKE_CONFIGURATION=release
-        - ARTIFACT_PATH=gpr/build/source/app/gpr_tools/Debug/gpr_tools.exe
+        - ARTIFACT_PATH=source/app/gpr_tools/Debug/gpr_tools.exe
 
 before_script:
   - eval "${MATRIX_EVAL}"
@@ -44,7 +44,6 @@ script:
   - ls -R build
   - ls build/source/app/gpr_tools
   - cd $TRAVIS_BUILD_DIR
-  - curl --upload-file $ARTIFACT_PATH "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME" > transfer.txt
+  - curl -sS --upload-file "./gpr/build/$ARTIFACT_PATH" "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME" > transfer.txt
   - ls -la
-  - cat transfer.txt
-  - sleep 30
+  - cat transfer.txt && sleep 10

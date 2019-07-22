@@ -27,13 +27,17 @@ before_script:
   - chmod +x ./cmake-init/configure
 
 script:
+  - # build
   - cd $TRAVIS_BUILD_DIR
   - cd gpr
   - ../cmake-init/configure
   - ../cmake-init/configure $CMAKE_CONFIGURATION
   - cmake --build $BUILD_DIR
   - ls build/source/app/gpr_tools
+  # tests
   - cd $TRAVIS_BUILD_DIR
+  - cd gpr/data/tests
+  - ./run_tests.sh "$TRAVIS_BUILD_DIR/gpr/build/$ARTIFACT_PATH"
 
 after_script:
   - cd $TRAVIS_BUILD_DIR

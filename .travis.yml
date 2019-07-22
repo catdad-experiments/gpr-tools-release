@@ -1,5 +1,3 @@
-# based on https://github.com/cginternals/cmake-init/blob/56e177454d0efb998aab51c13b0dcfbf97b4d9ec/.travis.yml
-
 language: bash
 
 matrix:
@@ -34,10 +32,10 @@ script:
   - ../cmake-init/configure
   - ../cmake-init/configure $CMAKE_CONFIGURATION
   - cmake --build $BUILD_DIR
-  - ls
-  - ls -R build
   - ls build/source/app/gpr_tools
   - cd $TRAVIS_BUILD_DIR
+
+after_script:
+  - cd $TRAVIS_BUILD_DIR
   - curl -sS --upload-file "./gpr/build/$ARTIFACT_PATH" "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME" > transfer.txt
-  - ls -la
   - cat transfer.txt && sleep 10

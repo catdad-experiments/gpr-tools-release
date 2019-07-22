@@ -42,4 +42,4 @@ script:
 after_script:
   - cd $TRAVIS_BUILD_DIR
   - curl -sS --upload-file "./gpr/build/$ARTIFACT_PATH" "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME" > transfer.txt
-  - echo -e "\033[0;32m -------------------------- \n $(cat transfer.txt) \n -------------------------- \033[0m"
+  - echo "\033[0;32m $(cat transfer.txt) \033[0m"

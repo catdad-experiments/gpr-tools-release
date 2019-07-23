@@ -19,7 +19,7 @@ matrix:
         - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
         - BUILD_DIR=build
         - CMAKE_CONFIGURATION=release
-        - ARTIFACT_PATH=source/app/gpr_tools/Debug/gpr_tools.exe
+        - ARTIFACT_PATH=source/app/gpr_tools/Release/gpr_tools.exe
 
 before_script:
   - eval "${MATRIX_EVAL}"
@@ -32,7 +32,8 @@ script:
   - cd gpr
   - ../cmake-init/configure
   - ../cmake-init/configure $CMAKE_CONFIGURATION
-  - cmake --build $BUILD_DIR --config Release
+  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then cmake --build $BUILD_DIR; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then cmake --build $BUILD_DIR --config Release; fi
   - ls -lR build/source/app/gpr_tools
   # tests
   - cd $TRAVIS_BUILD_DIR

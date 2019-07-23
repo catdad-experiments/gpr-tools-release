@@ -5,20 +5,14 @@ matrix:
     - os: linux
       compiler: clang
       env:
-        - CMAKE_CONFIGURATION=release
-        - BUILD_DIR=build
         - ARTIFACT_PATH=source/app/gpr_tools/gpr_tools
     - os: osx
       osx_image: xcode9.1
       env:
-        - CMAKE_CONFIGURATION=release
-        - BUILD_DIR=build
         - ARTIFACT_PATH=source/app/gpr_tools/gpr_tools
     - os: windows
       env:
         - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
-        - BUILD_DIR=build
-        - CMAKE_CONFIGURATION=release
         - ARTIFACT_PATH=source/app/gpr_tools/Debug/gpr_tools.exe
 
 before_script:
@@ -30,17 +24,21 @@ script:
   - # build
   - cd $TRAVIS_BUILD_DIR
   - cd gpr
-  - ../cmake-init/configure
-  - ../cmake-init/configure $CMAKE_CONFIGURATION
-  - cmake --build $BUILD_DIR
+  - mkdir build
+  - cd build
+  - cmake ../
+  - cmake --build . --config Release
+#  - ../cmake-init/configure
+#  - ../cmake-init/configure $CMAKE_CONFIGURATION
+#  - cmake --build $BUILD_DIR
   - ls build/source/app/gpr_tools
   # tests
-  - cd $TRAVIS_BUILD_DIR
-  - cd gpr/data/tests
-  - ./run_tests.sh "$TRAVIS_BUILD_DIR/gpr/build/$ARTIFACT_PATH"
+#  - cd $TRAVIS_BUILD_DIR
+#  - cd gpr/data/tests
+#  - ./run_tests.sh "$TRAVIS_BUILD_DIR/gpr/build/$ARTIFACT_PATH"
 
 after_script:
-  - cd $TRAVIS_BUILD_DIR
-  - zip "gpr_tools.$TRAVIS_OS_NAME.zip" "./gpr/build/$ARTIFACT_PATH"
-  - curl -sS --upload-file "gpr_tools.$TRAVIS_OS_NAME.zip" "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME.zip" > transfer.txt
-  - echo -e "\033[0;32m $(cat transfer.txt) \033[0m"
+#  - cd $TRAVIS_BUILD_DIR
+#  - zip "gpr_tools.$TRAVIS_OS_NAME.zip" "./gpr/build/$ARTIFACT_PATH"
+#  - curl -sS --upload-file "gpr_tools.$TRAVIS_OS_NAME.zip" "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME.zip" > transfer.txt
+#  - echo -e "\033[0;32m $(cat transfer.txt) \033[0m"

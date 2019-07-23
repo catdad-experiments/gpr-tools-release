@@ -41,7 +41,7 @@ script:
   - ./run_tests.sh "$TRAVIS_BUILD_DIR/gpr/build/$ARTIFACT_PATH"
 
 after_script:
-#  - cd $TRAVIS_BUILD_DIR
-#  - zip "gpr_tools.$TRAVIS_OS_NAME.zip" "./gpr/build/$ARTIFACT_PATH"
-#  - curl -sS --upload-file "gpr_tools.$TRAVIS_OS_NAME.zip" "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME.zip" > transfer.txt
-#  - echo -e "\033[0;32m $(cat transfer.txt) \033[0m"
+  - cd $TRAVIS_BUILD_DIR
+  - zip "gpr_tools.$TRAVIS_OS_NAME.zip" "./gpr/build/$ARTIFACT_PATH"
+  - curl -sS --upload-file "gpr_tools.$TRAVIS_OS_NAME.zip" "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME.zip" > transfer.txt
+  - echo -e "\033[0;32m $(cat transfer.txt) \033[0m"

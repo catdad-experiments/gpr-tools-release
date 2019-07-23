@@ -5,29 +5,35 @@ matrix:
     - os: linux
       compiler: clang
       env:
+        - CMAKE_CONFIGURATION=release
+        - BUILD_DIR=build
         - ARTIFACT_PATH=source/app/gpr_tools/gpr_tools
     - os: osx
       osx_image: xcode9.1
       env:
+        - CMAKE_CONFIGURATION=release
+        - BUILD_DIR=build
         - ARTIFACT_PATH=source/app/gpr_tools/gpr_tools
     - os: windows
       env:
         - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
-        - ARTIFACT_PATH=source/app/gpr_tools/Release/gpr_tools.exe
+        - BUILD_DIR=build
+        - CMAKE_CONFIGURATION=release
+        - ARTIFACT_PATH=source/app/gpr_tools/Debug/gpr_tools.exe
 
 before_script:
   - eval "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$PATH:/c/Program Files/CMake/bin:$(pwd)/make/bin"; fi
+  - chmod +x ./cmake-init/configure
 
 script:
   - # build
   - cd $TRAVIS_BUILD_DIR
   - cd gpr
-  - mkdir build
-  - cd build
-  - cmake ../
-  - cmake --build . --config Release
-  - ls -lR source/app/gpr_tools
+  - ../cmake-init/configure
+  - ../cmake-init/configure $CMAKE_CONFIGURATION
+  - cmake --build $BUILD_DIR --config Release
+  - ls -lR build/source/app/gpr_tools
   # tests
   - cd $TRAVIS_BUILD_DIR
   - cd gpr/data/tests

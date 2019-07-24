@@ -8,18 +8,21 @@ matrix:
         - CMAKE_CONFIGURATION=release
         - BUILD_DIR=build
         - ARTIFACT_PATH=source/app/gpr_tools/gpr_tools
+        - ARTIFACT_OUTPUT=gpr_tools_linux
     - os: osx
       osx_image: xcode9.1
       env:
         - CMAKE_CONFIGURATION=release
         - BUILD_DIR=build
         - ARTIFACT_PATH=source/app/gpr_tools/gpr_tools
+        - ARTIFACT_OUTPUT=gpr_tools_osx
     - os: windows
       env:
         - CMAKE_GENERATOR_OVERRIDE="Visual Studio 15 2017 Win64"
         - BUILD_DIR=build
         - CMAKE_CONFIGURATION=release
         - ARTIFACT_PATH=source/app/gpr_tools/Release/gpr_tools.exe
+        - ARTIFACT_OUTPUT=gpr_tools_windows.exe
 
 before_script:
   - eval "${MATRIX_EVAL}"
@@ -39,10 +42,14 @@ script:
   - cd $TRAVIS_BUILD_DIR
   - cd gpr/data/tests
   - ./run_tests.sh "$TRAVIS_BUILD_DIR/gpr/build/$ARTIFACT_PATH"
+  # prepare release
+  - cd $TRAVIS_BUILD_DIR
+  - mkdir dist
+  - cp "./gpr/build/$ARTIFACT_PATH" "dist/$ARTIFACT_OUTPUT"
 
 after_script:
   - cd $TRAVIS_BUILD_DIR
-  - curl -sS --upload-file "./gpr/build/$ARTIFACT_PATH" "https://transfer.sh/gpr_tools_$TRAVIS_OS_NAME" > transfer.txt
+  - curl -sS --upload-file "./dist/$ARTIFACT_OUTPUT" "https://transfer.sh/$ARTIFACT_OUTPUT" > transfer.txt
   - echo -e "\033[0;32m $(cat transfer.txt) \033[0m"
 
 deploy:
@@ -50,8 +57,8 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: Jo3TwyP/okqBm2K0l5ceHZri0UZnIY8wraLOLSjxkfpiVzoCWzkjvrowAZplAfcY950VgmoPYjFtxCk75oMb00iLeFnGro4Nxbkg9HjPZlcfV2gxEHNT2cbPLO9WIdMsHzEdjh5m1YTlio3GphTRorItYtVwXMPsJ0y4XvzqAcLnDG9E/Y88zMFfAs0txovY66DgzgJUghBieZQm0e9TQNOl+lBt59IBWR5kw0l3Ufu/XiaWXccf5ES02gwJjfxC4WgXuPTRJe5DhnM5raAClzLy36zorhvMc4uhzx77sO0RGUJavruPppFcP4Xd/FDWlJCdMuFjKd75IQ42uTULUIlXG3G6yfGQTQKMvXt0kzh3zbjlXLCnUv1+tEK35cwzyCUF5NTcRWJZwaXFEDHVDBW+88pIt7P04oMzlrfEtHeTKvn9xmsbfzGsBf4XYeWNLS6AZT0gZF6eIlw+pLCfyOgSoQGuPJwpEWH8BZfhiQGJ4am47vlNj3zFsUrcneB69iC4hTpfMPfJOf5GBF0R5rGjSSP9H6VtLSEcpqIswJahF4UPgDBSsBM9wpjsuk2ODJL8zIIAmdEULmWLm7CsBsWwpiEH+6mCq4uKDc9ffsTrU12NyyfG22Y8iATfJJT2pkrc17UO8o/jyjsLPMRaw4UYjgPn6F3kGUV5rMWJp2U=
-  file: "gpr/build/$ARTIFACT_PATH"
+  file: "dist/$ARTIFACT_OUTPUT"
   on:
     repo: catdad-experiments/gpr-tools-release
-    branch: ""*"
+    branch: "*"
     tags: true

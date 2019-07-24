@@ -25,12 +25,11 @@ matrix:
         - ARTIFACT_OUTPUT=gpr_tools_windows.exe
 
 before_script:
-  - eval "${MATRIX_EVAL}"
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then export PATH="$PATH:/c/Program Files/CMake/bin:$(pwd)/make/bin"; fi
   - chmod +x ./cmake-init/configure
 
 script:
-  - # build
+  # build
   - cd $TRAVIS_BUILD_DIR
   - cd gpr
   - ../cmake-init/configure
@@ -46,6 +45,7 @@ script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir dist
   - cp "./gpr/build/$ARTIFACT_PATH" "dist/$ARTIFACT_OUTPUT"
+  - ls -l dist
 
 after_script:
   - cd $TRAVIS_BUILD_DIR
